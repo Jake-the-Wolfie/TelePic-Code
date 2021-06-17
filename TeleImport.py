@@ -3,9 +3,10 @@
 import csv
 import random
 
-# Here be some numbers to play around with.
-players = 20
-chainlength = 13
+print('How many players are there in your game?')
+players = int(input())
+print('How long will each chain be?')
+chainlength = int(input())
 
 header = ['Chain / Round']
 chainlist = [] 
@@ -26,7 +27,7 @@ for x in range(0, players):
     user = names.readline(100) # Footnote [1]
     PermaPlayers.append(user.rstrip())
 names.close()
-names = open('chainsnames.txt', 'r')
+names = open('chainnames.txt', 'r')
 for x in range(0, players):
     user = names.readline(100) # Footnote [1]
     ChainNames.append(user.rstrip())
@@ -53,13 +54,11 @@ for x in range(1, chainlength):
     bad_numbers.add(RandNum)
     GoodNumber = 0
     for y in range(0, players):
-        n = (RandNum + y) % 20
+        n = (RandNum + y) % players
         templist = PermaPlayers[n]
         chainlist[y].append(templist)
 # This essentially does a Caesar shift on the playerlist, then adds them to the existing nested lists inside chainlist.
 # I made sure that it couldn't get the same number twice.
-
-print('Step 1 complete!')
 # This should proccess the chains.
 
 for x in range(0, players):
@@ -70,8 +69,6 @@ blanklist = []
 for x in range (0, players):
     blanklist.append('')
 # This makes me feel slimey, but it's the easiest way I thought of to get the alternating rows and colummns.
-
-print('Step 2 complete!')
 # This exports the data to the files
 
 with open('chainsheet.csv', 'w', newline='') as f:
@@ -81,8 +78,6 @@ with open('chainsheet.csv', 'w', newline='') as f:
         writer.writerow(chainlist[x])
         writer.writerow(blanklist)
 f.close()
-
-
 
 print('All Done!')
 # Done!
